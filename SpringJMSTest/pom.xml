@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.test.spring</groupId>
+  <artifactId>SpringJMSTest</artifactId>
+  <packaging>jar</packaging>
+  <name>SpringJMSTest</name>
+  <version>0.0.1-SNAPSHOT</version>
+
+  
+  <properties>
+      <activemq-version>5.6.0</activemq-version>
+	<slf4j.version>1.5.6</slf4j.version>
+	<spring.maven.artifact.version>3.2.2.RELEASE</spring.maven.artifact.version>
+
+  </properties>
+  
+  <dependencies>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
+      <version>${spring.maven.artifact.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>${spring.maven.artifact.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-beans</artifactId>
+      <version>${spring.maven.artifact.version}</version>
+    </dependency>
+<dependency>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring-jms</artifactId>
+	<version>4.0.1.RELEASE</version>
+</dependency>
+      <dependency>
+        <groupId>org.apache.activemq</groupId>
+        <artifactId>activemq-core</artifactId>
+        <version>${activemq-version}</version>
+      </dependency>
+                   
+            
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-log4j12</artifactId>
+    <version>${slf4j.version}</version>
+</dependency>
+
+	<!-- test scoped dependencies -->
+
+	  
+	
+  </dependencies>
+
+  <!-- for packaging as an OSGi bundle, we use the maven-bundle-plugin -->
+  
+  <!-- see http://felix.apache.org/site/maven-bundle-plugin-bnd.html for more info -->
+  <build>
+    <resources>
+      <!-- standard Maven folder -->
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+      <!-- plus root folder -->
+      <resource>
+        <directory>.</directory>
+      </resource>
+    </resources>  
+     <plugins>
+   <plugin>
+    <artifactId>maven-assembly-plugin</artifactId>
+    <version>2.2-beta-5</version>
+    <configuration>
+        <appendAssemblyId>false</appendAssemblyId>
+        <archive>
+            <manifest>
+                <mainClass>com.test.spring.ConsumerApp</mainClass>
+            </manifest>
+        </archive>
+        <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+        </descriptorRefs>
+    </configuration>
+    <executions>
+        <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+                <goal>single</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+        </plugins>
+    
+  </build>
+  
+  <!-- ================================================ -->
+  <!--            Repository Configuration              -->
+  <!-- ================================================ -->
+
+  <repositories>
+
+
+    
+  
+    
+    <!--
+    
+    Spring-DM snapshot repository - disabled by default
+    
+    <repository>
+	 <snapshots><enabled>true</enabled></snapshots>
+	  <id>springframework.org</id>
+      <name>Springframework Maven SNAPSHOT Repository</name>
+      <url>http://s3.amazonaws.com/maven.springframework.org/snapshot</url>
+	</repository>
+	-->
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>maven-repo</id>
+      <name>maven repo</name>
+      <url>http://repo1.maven.org/maven2/</url>
+    </pluginRepository>
+        <pluginRepository>
+      <id>jms-sun</id>
+      <name>jms-sun</name>
+      <url>http://java.sun.com/products/jms</url>
+    </pluginRepository>
+
+  </pluginRepositories>
+  
+</project>

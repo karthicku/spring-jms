@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:jms="http://www.springframework.org/schema/jms"
+  xmlns:p="http://www.springframework.org/schema/p"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd">
+
+  <bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory"
+    p:brokerURL="tcp://localhost:61616" />
+  
+  <bean id="destination" class="org.apache.activemq.command.ActiveMQQueue">
+    <constructor-arg value="spring.jms.listener" />
+  </bean>
+    
+  <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate"
+    p:connectionFactory-ref="connectionFactory"
+    p:defaultDestination-ref="destination" />
+  
+  <bean id="messageListener" class="com.test.spring.listener.UserMessageListener" />
+  
+  <!-- 
+    This is the Spring DefaultMessageListenerContainer (DMLC). All default values 
+    for the DMLC are used except for concurrency; By default the DMLC knows to use the 
+    bean whose name is connectionFactory.
+  -->
+  <jms:listener-container concurrency="5-10">
+    <jms:listener destination="spring.jms.listener" ref="messageListener"/>
+  </jms:listener-container>
+
+</beans>
