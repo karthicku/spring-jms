@@ -1,2 +1,8 @@
-To facilitate OSGi bundle manifest generation, the archetype uses Felix maven plugin.
-Please see http://felix.apache.org/site/maven-bundle-plugin-bnd.html for more information.
+Sample Spring JMS consumer app implementation using maven.
+Use below command to create the runnable jar with dependencies:
+
+mvn package
+
+To run the main app use below command:
+
+mvn exec:java -Dexec.mainClass="com.test.spring.ConsumerApp" -Dexec.classpathScope=runtime
